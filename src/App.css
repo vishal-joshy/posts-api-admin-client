@@ -1,4 +1,18 @@
 .posts-container {
 	display: flex;
 	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+.card-wrapper {
+	margin-top: 2rem;
+}
+.card-wrapper:hover {
+	cursor: pointer;
+}
+.header {
+	position: sticky;
+	top: 0;
+	z-index: 100;
 }
