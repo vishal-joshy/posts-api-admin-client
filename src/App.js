@@ -1,31 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Header from './components/HeaderComponent/Header';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Posts from './components/PostsComponent/Posts';
 import PostDetails from './components/PostsComponent/PostDetails';
+import axios from 'axios';
 
 function App() {
-	const dummyData = [
-		{
-			title: 'New Blog',
-			post_id: '1',
-		},
-		{ title: 'New BLog 2', post_id: '2' },
-    { title: 'New BLog 3', post_id: '3' },
-    { title: 'New BLog 4', post_id: '4' },
-    { title: 'New BLog 5', post_id: '5' },
-    { title: 'New BLog 6', post_id: '6' },
-	];
+	const [posts, setPosts] = useState([]);
+
+	const getData = async () => {
+		const response = await axios('http://localhost:8080/api/posts');
+
+		setPosts(response.data);
+		console.log(response.data);
+	};
+	useEffect(() => {
+		getData();
+	}, []);
 
 	return (
 		<div>
 			<Header />
 			<BrowserRouter>
 				<Switch>
-					<Route exact path='/' render={() => <Posts data={dummyData} />} />
-					<Route exact path='/post/:post_id' render={() => <PostDetails />} />
+					<Route exact path='/' render={() => <Posts data={posts} />} />
+					{React.Children.toArray(
+						posts.map((post) => (
+							<Route exact path={`/post/${post._id}`} render={() => <PostDetails data={post} />} />
+						))
+					)}
 				</Switch>
 			</BrowserRouter>
 		</div>
