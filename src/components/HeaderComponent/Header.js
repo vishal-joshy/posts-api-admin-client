@@ -3,7 +3,7 @@ import { Navbar, Container, Nav } from 'react-bootstrap';
 
 function Header() {
 	return (
-		<div className="header">
+		<div className='header'>
 			<Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
 				<Container>
 					<Navbar.Brand href='/'>Posts</Navbar.Brand>
@@ -11,8 +11,9 @@ function Header() {
 					<Navbar.Collapse id='responsive-navbar-nav'>
 						<Nav className='me-auto'></Nav>
 						<Nav>
-							<Nav.Link href='#deets'>Sign In</Nav.Link>
-							<Nav.Link href='#memes'>Sign Up</Nav.Link>
+							<Nav.Link href='/login'>Sign In</Nav.Link>
+							<Nav.Link href='/sign-up'>Sign Up</Nav.Link>
+							<Nav.Link href='/post-form'>+ New Post</Nav.Link>
 						</Nav>
 					</Navbar.Collapse>
 				</Container>
