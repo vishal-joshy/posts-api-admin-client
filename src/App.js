@@ -6,8 +6,9 @@ import axios from 'axios';
 import Header from './components/HeaderComponent/Header';
 import Posts from './components/PostsComponent/Posts';
 import PostDetails from './components/PostsComponent/PostDetails';
-import SignIn from './components/UserComponent/SignIn';
-import SignUp from './components/UserComponent/SignUp';
+import UserSignUpForm from './components/FormComponent/UserSignUpForm';
+import UserLoginForm from './components/FormComponent/UserLoginForm';
+import PostForm from './components/FormComponent/PostForm';
 
 export const apiUrlContext = React.createContext();
 
@@ -35,16 +36,21 @@ function App() {
 	return (
 		<div>
 			<Header />
-			
+
 			<BrowserRouter>
 				<Switch>
 					<apiUrlContext.Provider value={API_URI}>
-						<Route exact path='/login' render={() => <SignIn />} />
-						<Route exact path='/sign-up' render={() => <SignUp />} />
+						<Route exact path='/login' render={() => <UserLoginForm />} />
+						<Route exact path='/sign-up' render={() => <UserSignUpForm />} />
 						<Route exact path='/' render={() => <Posts />} />
+						<Route exact path='/post-form' render={() => <PostForm />} />
 						{React.Children.toArray(
 							postIDs.map((postID) => (
-								<Route exact path={`/post/${postID}`} render={() => <PostDetails postID={postID} />} />
+								<Route
+									exact
+									path={`/post/${postID}`}
+									render={() => <PostDetails postID={postID} />}
+								/>
 							))
 						)}
 					</apiUrlContext.Provider>
