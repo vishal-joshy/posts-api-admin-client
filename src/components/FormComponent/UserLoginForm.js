@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function UserLoginForm() {
 	const [credentials, setCredentials] = useState({ username: '', password: '' });
-	console.log('Login component');
 
-	const handleFormSubmit = (e) => {
+	const handleFormSubmit = async (e) => {
 		e.preventDefault();
+		try {
+			const response = await axios.post('http://localhost:8080/api/user/login', credentials);
+			localStorage.setItem('token',response.data.token);
+		} catch (err) {
+			console.log(err);
+		}
+
 		console.log(credentials);
 	};
 	const handleChange = (e) => {

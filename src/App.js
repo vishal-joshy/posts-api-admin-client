@@ -36,7 +36,6 @@ function App() {
 	return (
 		<div>
 			<Header />
-
 			<BrowserRouter>
 				<Switch>
 					<apiUrlContext.Provider value={API_URI}>
@@ -53,6 +52,7 @@ function App() {
 								/>
 							))
 						)}
+						
 					</apiUrlContext.Provider>
 				</Switch>
 			</BrowserRouter>

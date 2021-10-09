@@ -22,7 +22,7 @@ function PostDetails({ postID }) {
 			}
 		};
 		getData();
-	}, [isPostDeleted]);
+	}, [isPostDeleted,API_URI,postID]);
 
 	const deletePost = (post_id) => {
 		if (window.confirm('Are you sure you want to delete your post?')) {

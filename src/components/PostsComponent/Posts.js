@@ -20,7 +20,7 @@ function Posts() {
 			}
 		};
 		getData();
-	}, []);
+	}, [API_URI]);
 
 	return (
 		<div className='posts-container'>
