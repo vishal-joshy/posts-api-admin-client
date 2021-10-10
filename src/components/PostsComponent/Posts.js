@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { apiUrlContext } from '../../App';
+
 import axios from 'axios';
 
 function Posts() {
-	const API_URI = useContext(apiUrlContext);
+	const API_URI = 'http://localhost:8080/api';
 	const [posts, setPosts] = useState([]);
 
 	console.log('Post component');

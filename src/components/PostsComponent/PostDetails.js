@@ -1,21 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useHistory } from 'react-router';
-import { apiUrlContext } from '../../App';
+
 
 function PostDetails({ postID }) {
-	const API_URI = useContext(apiUrlContext);
+	const API_URI = 'http://localhost:8080/api';
 	const history = useHistory();
 	const [post, setPost] = useState({});
 	const [isPostDeleted, setIsPostDeleted] = useState(false);
 
 	console.log('Post Detail');
 
+	const getToken  = ()=>['Bearer',' ',`${sessionStorage.getItem('token')}`].join('');
+
 	useEffect(() => {
 		const getData = async () => {
 			try {
-				const response = await axios.get(API_URI + `/posts/${postID}`);
+				const response = await axios.get(API_URI+ `/posts/${postID}`);
 				setPost(response.data);
 			} catch (err) {
 				console.log(err);
@@ -27,7 +29,11 @@ function PostDetails({ postID }) {
 	const deletePost = (post_id) => {
 		if (window.confirm('Are you sure you want to delete your post?')) {
 			axios
-				.delete(API_URI + `/posts/${post_id}`)
+				.delete(API_URI + `/posts/${post_id}`,{
+					headers:{
+						'Authorization': getToken()
+					}
+				})
 				.then((response) => {
 					console.log(response);
 					setIsPostDeleted(true);

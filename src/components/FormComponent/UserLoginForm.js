@@ -8,7 +8,7 @@ function UserLoginForm() {
 		e.preventDefault();
 		try {
 			const response = await axios.post('http://localhost:8080/api/user/login', credentials);
-			localStorage.setItem('token',response.data.token);
+			sessionStorage.setItem('token',response.data.token);
 		} catch (err) {
 			console.log(err);
 		}
