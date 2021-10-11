@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
+import { useRecoilState } from 'recoil';
 import axios from 'axios';
+import { apiUriState } from '../../App';
 
 function Posts() {
-	const API_URI = 'http://localhost:8080/api';
+	const [apiUri] = useRecoilState(apiUriState);
 	const [posts, setPosts] = useState([]);
 
 	console.log('Post component');
@@ -13,14 +14,14 @@ function Posts() {
 	useEffect(() => {
 		const getData = async () => {
 			try {
-				const response = await axios.get(API_URI + '/posts');
+				const response = await axios.get(apiUri + '/posts');
 				setPosts(response.data);
 			} catch (err) {
 				console.log(err);
 			}
 		};
 		getData();
-	}, [API_URI]);
+	}, [apiUri]);
 
 	return (
 		<div className='posts-container'>

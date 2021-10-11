@@ -3,18 +3,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Routes from './components/Routes';
 import Header from './components/HeaderComponent/Header';
+import { RecoilRoot, atom, selector, useRecoilState, useRecoilValue } from 'recoil';
+
+export const apiUriState = atom({
+	key: 'apiUriState',
+	default: 'http://localhost:8080/api',
+});
+
+export const userLoginStatusState = atom({
+	key: 'userLoginStatusState',
+	default: {
+		isLoggedIn: false,
+		username: '',
+	},
+});
 
 function App() {
-	
-	const apiUri = 'http://localhost:8080/api';
-
 	console.log('App component');
 
 	return (
-		<div>
+		<RecoilRoot>
 			<Header />
-			<Routes apiUri = {apiUri}/>
-		</div>
+			<Routes />
+		</RecoilRoot>
 	);
 }
 

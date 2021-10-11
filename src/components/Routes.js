@@ -6,8 +6,12 @@ import UserSignUpForm from './FormComponent/UserSignUpForm';
 import UserLoginForm from './FormComponent/UserLoginForm';
 import PostForm from './FormComponent/PostForm';
 import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import { apiUriState } from '../App';
 
-function Routes({ apiUri }) {
+function Routes() {
+	const [apiUri] = useRecoilState(apiUriState);
+
 	const [postIDs, setPostIDs] = useState([]);
 
 	useEffect(() => {
@@ -30,7 +34,7 @@ function Routes({ apiUri }) {
 				<Switch>
 					<Route exact path='/login' render={() => <UserLoginForm />} />
 					<Route exact path='/sign-up' render={() => <UserSignUpForm />} />
-					<Route exact path='/' render={() => <Posts />} />
+					<Route exact path='/' component={Posts} />
 					<Route exact path='/post-form' render={() => <PostForm />} />
 					{React.Children.toArray(
 						postIDs.map((postID) => (

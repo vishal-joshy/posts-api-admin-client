@@ -1,38 +1,39 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useHistory } from 'react-router';
-
+import { apiUriState } from '../../App';
+import { useRecoilState } from 'recoil';
 
 function PostDetails({ postID }) {
-	const API_URI = 'http://localhost:8080/api';
+	const [apiUri] = useRecoilState(apiUriState);
 	const history = useHistory();
 	const [post, setPost] = useState({});
 	const [isPostDeleted, setIsPostDeleted] = useState(false);
 
 	console.log('Post Detail');
 
-	const getToken  = ()=>['Bearer',' ',`${sessionStorage.getItem('token')}`].join('');
+	const getToken = () => ['Bearer', ' ', `${sessionStorage.getItem('token')}`].join('');
 
 	useEffect(() => {
 		const getData = async () => {
 			try {
-				const response = await axios.get(API_URI+ `/posts/${postID}`);
+				const response = await axios.get(apiUri + `/posts/${postID}`);
 				setPost(response.data);
 			} catch (err) {
 				console.log(err);
 			}
 		};
 		getData();
-	}, [isPostDeleted,API_URI,postID]);
+	}, [isPostDeleted, apiUri, postID]);
 
 	const deletePost = (post_id) => {
 		if (window.confirm('Are you sure you want to delete your post?')) {
 			axios
-				.delete(API_URI + `/posts/${post_id}`,{
-					headers:{
-						'Authorization': getToken()
-					}
+				.delete(apiUri + `/posts/${post_id}`, {
+					headers: {
+						Authorization: getToken(),
+					},
 				})
 				.then((response) => {
 					console.log(response);
@@ -42,9 +43,6 @@ function PostDetails({ postID }) {
 					console.log(err);
 				});
 		}
-	};
-	const handleRouteClick = () => {
-		history.push('/');
 	};
 
 	if (post) {
@@ -71,10 +69,12 @@ function PostDetails({ postID }) {
 		return (
 			<div>
 				Post Removed !
-				<Button variant='primary' onClick={handleRouteClick}>
-					{' '}
-					Main Page
-				</Button>
+				<a href='/'>
+					<Button variant='primary'>
+						{' '}
+						Main Page
+					</Button>
+				</a>
 			</div>
 		);
 	}

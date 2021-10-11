@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+
 function UserLoginForm() {
+
+
 	const [credentials, setCredentials] = useState({ username: '', password: '' });
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			const response = await axios.post('http://localhost:8080/api/user/login', credentials);
-			sessionStorage.setItem('token',response.data.token);
+			sessionStorage.setItem('token', response.data.token);
+			sessionStorage.setItem('username', credentials.username);
+			window.location.assign('/');
 		} catch (err) {
 			console.log(err);
 		}
