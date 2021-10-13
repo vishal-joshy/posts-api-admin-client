@@ -1,11 +1,28 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useRecoilValue } from 'recoil';
+import { apiUriState,getToken } from '../../App';
+
+
 
 function PostForm() {
+	const apiUri = useRecoilValue(apiUriState);
 	const [postDetails, setPostDetails] = useState({ title: '', content: '' });
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		console.log(postDetails);
+		axios.post(apiUri+'/posts', postDetails ,{headers: {
+			Authorization: getToken(),
+		}}).then(result=>{
+			console.log(result);
+			window.location.assign('/');
+			
+		}).catch(err=>{
+			console.log(err);
+		})
 	};
+
+
 	const handleChange = (e) => {
 		if (e.target.id === 'title') {
 			setPostDetails({ ...postDetails, title: e.target.value });

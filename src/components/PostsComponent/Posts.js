@@ -1,27 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import axios from 'axios';
-import { apiUriState } from '../../App';
+import useFetch from '../useFetch';
 
 function Posts() {
-	const [apiUri] = useRecoilState(apiUriState);
-	const [posts, setPosts] = useState([]);
+	const [posts]= useFetch({method:'GET',endpoint:'/posts'});
 
 	console.log('Post component');
-
-	useEffect(() => {
-		const getData = async () => {
-			try {
-				const response = await axios.get(apiUri + '/posts');
-				setPosts(response.data);
-			} catch (err) {
-				console.log(err);
-			}
-		};
-		getData();
-	}, [apiUri]);
 
 	return (
 		<div className='posts-container'>

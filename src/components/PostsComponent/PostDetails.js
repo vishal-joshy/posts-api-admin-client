@@ -1,32 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import axios from 'axios';
-import { useHistory } from 'react-router';
-import { apiUriState } from '../../App';
+import { apiUriState,getToken } from '../../App';
 import { useRecoilState } from 'recoil';
+import useFetch from '../useFetch';
 
 function PostDetails({ postID }) {
 	const [apiUri] = useRecoilState(apiUriState);
-	const history = useHistory();
-	const [post, setPost] = useState({});
-	const [isPostDeleted, setIsPostDeleted] = useState(false);
 
+	const [post]= useFetch({method:'GET',endpoint:`/posts/${postID}`});
+	
 	console.log('Post Detail');
-
-	const getToken = () => ['Bearer', ' ', `${sessionStorage.getItem('token')}`].join('');
-
-	useEffect(() => {
-		const getData = async () => {
-			try {
-				const response = await axios.get(apiUri + `/posts/${postID}`);
-				setPost(response.data);
-			} catch (err) {
-				console.log(err);
-			}
-		};
-		getData();
-	}, [isPostDeleted, apiUri, postID]);
-
 	const deletePost = (post_id) => {
 		if (window.confirm('Are you sure you want to delete your post?')) {
 			axios
@@ -37,7 +21,6 @@ function PostDetails({ postID }) {
 				})
 				.then((response) => {
 					console.log(response);
-					setIsPostDeleted(true);
 				})
 				.catch((err) => {
 					console.log(err);

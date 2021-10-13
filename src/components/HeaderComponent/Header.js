@@ -9,6 +9,7 @@ function Header() {
 			setUsername(sessionStorage.getItem('username'));
 		}
 	}, []);
+	
 	const logoutUser = () => {
 		console.log('logout User');
 		sessionStorage.clear();
