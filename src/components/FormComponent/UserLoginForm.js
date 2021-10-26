@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-
+import React, { useState } from "react";
+import axios from "axios";
 
 function UserLoginForm() {
-
-
-	const [credentials, setCredentials] = useState({ username: '', password: '' });
+	const [credentials, setCredentials] = useState({});
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const response = await axios.post('http://localhost:8080/api/user/login', credentials);
-			sessionStorage.setItem('token', response.data.token);
-			sessionStorage.setItem('username', credentials.username);
-			window.location.assign('/');
+			const response = await axios.post("http://localhost:8080/api/user/login", credentials);
+			sessionStorage.setItem("token", response.data.token);
+			sessionStorage.setItem("username", credentials.username);
+			window.location.assign("/");
 		} catch (err) {
 			console.log(err);
 		}
@@ -21,11 +18,9 @@ function UserLoginForm() {
 		console.log(credentials);
 	};
 	const handleChange = (e) => {
-		if (e.target.id === 'username') {
-			setCredentials({ ...credentials, username: e.target.value });
-		} else {
-			setCredentials({ ...credentials, password: e.target.value });
-		}
+		let newObj = {};
+		newObj[e.target.id] = e.target.value;
+		setCredentials({ ...credentials, ...newObj });
 	};
 
 	return (

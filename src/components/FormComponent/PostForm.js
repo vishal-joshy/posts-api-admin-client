@@ -30,6 +30,7 @@ function PostForm() {
 			setPostDetails({ ...postDetails, content: e.target.value });
 		}
 	};
+	
 	return (
 		<div>
 			<form
