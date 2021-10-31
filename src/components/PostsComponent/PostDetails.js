@@ -1,18 +1,20 @@
-import React from 'react';
-import { Card, Button } from 'react-bootstrap';
-import axios from 'axios';
-import { apiUriState,getToken } from '../../App';
-import { useRecoilState } from 'recoil';
-import useFetch from '../useFetch';
+import React, { useEffect, useState } from "react";
+import { Card, Button } from "react-bootstrap";
+import axios from "axios";
+import { apiUriState, getToken } from "../../App";
+import { useRecoilState } from "recoil";
+import useFetch from "../useFetch";
+import Comments from "../Comments/Comments";
+import CommentForm from "../Comments/CommentForm";
 
 function PostDetails({ postID }) {
 	const [apiUri] = useRecoilState(apiUriState);
 
-	const [post]= useFetch({method:'GET',endpoint:`/posts/${postID}`});
-	
-	console.log('Post Detail');
+	const [post] = useFetch({ method: "GET", endpoint: `/posts/${postID}` });
+
+	console.log("Post Detail");
 	const deletePost = (post_id) => {
-		if (window.confirm('Are you sure you want to delete your post?')) {
+		if (window.confirm("Are you sure you want to delete your post?")) {
 			axios
 				.delete(apiUri + `/posts/${post_id}`, {
 					headers: {
@@ -31,7 +33,7 @@ function PostDetails({ postID }) {
 	if (post) {
 		return (
 			<div>
-				<Card style={{ width: '80vw' }}>
+				<Card style={{ width: "80vw" }}>
 					<Card.Body>
 						<Card.Title>{post.title}</Card.Title>
 						<Card.Text>{post.content}</Card.Text>
@@ -46,6 +48,9 @@ function PostDetails({ postID }) {
 					}}>
 					Delete
 				</Button>
+				Comments:
+				{!post?.comments ? <div>No comments yet</div> : <Comments data={post.comments} />}
+				<CommentForm post_id={postID} />
 			</div>
 		);
 	} else {
@@ -53,10 +58,7 @@ function PostDetails({ postID }) {
 			<div>
 				Post Removed !
 				<a href='/'>
-					<Button variant='primary'>
-						{' '}
-						Main Page
-					</Button>
+					<Button variant='primary'> Main Page</Button>
 				</a>
 			</div>
 		);

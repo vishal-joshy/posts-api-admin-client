@@ -4,6 +4,7 @@ import axios from 'axios';
 const uri = 'http://localhost:8080/api';
 
 const useFetch = ({method,endpoint}) => {
+	
 	const [data, setData] = useState([]);
     console.log(endpoint);
 	useEffect(() => {

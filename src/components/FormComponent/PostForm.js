@@ -3,8 +3,6 @@ import axios from 'axios';
 import { useRecoilValue } from 'recoil';
 import { apiUriState,getToken } from '../../App';
 
-
-
 function PostForm() {
 	const apiUri = useRecoilValue(apiUriState);
 	const [postDetails, setPostDetails] = useState({ title: '', content: '' });
